@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Synaphos"
+version = "1.0.0"
+id = "artifacts/synaphos"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25339
+
+[services.development]
+run = "pnpm --filter @workspace/synaphos run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/synaphos", "run", "build" ]
+publicDir = "artifacts/synaphos/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25339"
+BASE_PATH = "/"
